@@ -147,13 +147,14 @@ CUDA_TEST_P(HoughLinesProbabilistic, Accuracy)
 
     const float rho = 1.0f;
     const float theta = (float) (1.0 * CV_PI / 180.0);
+    const int threshold = 100;
     const int minLineLength = 15;
     const int maxLineGap = 8;
 
     cv::Mat src(size, CV_8UC1);
     generateLines(src);
 
-    Ptr<cv::cuda::HoughSegmentDetector> hough = cv::cuda::createHoughSegmentDetector(rho, theta, minLineLength, maxLineGap);
+    Ptr<cv::cuda::HoughSegmentDetector> hough = cv::cuda::createHoughSegmentDetector(rho, theta, threshold, minLineLength, maxLineGap);
 
     cv::cuda::GpuMat d_lines;
     hough->detect(loadMat(src, useRoi), d_lines);

@@ -431,11 +431,12 @@ public:
 
 @param rho Distance resolution of the accumulator in pixels.
 @param theta Angle resolution of the accumulator in radians.
+@param threshold Accumulator threshold parameter. Only those lines are returned that get enough votes
 @param minLineLength Minimum line length. Line segments shorter than that are rejected.
 @param maxLineGap Maximum allowed gap between points on the same line to link them.
 @param maxLines Maximum number of output lines.
  */
-CV_EXPORTS_W Ptr<HoughSegmentDetector> createHoughSegmentDetector(float rho, float theta, int minLineLength, int maxLineGap, int maxLines = 4096);
+CV_EXPORTS_W Ptr<HoughSegmentDetector> createHoughSegmentDetector(float rho, float theta, int threshold, int minLineLength, int maxLineGap, int maxLines = 4096);
 
 //////////////////////////////////////
 // HoughCircles

@@ -52,7 +52,7 @@ namespace cv { namespace cuda { namespace device
     {
         __global__ void houghLinesProbabilistic(cv::cudev::Texture<uchar> src, const PtrStepSzi accum,
                                                 int4* out, const int maxSize,
-                                                const float rho, const float theta,
+                                                const float rho, const float theta, int threshold,
                                                 const int lineGap, const int lineLength,
                                                 const int rows, const int cols,
                                                 int* counterPtr)
@@ -65,7 +65,7 @@ namespace cv { namespace cuda { namespace device
 
             const int curVotes = accum(n + 1, r + 1);
 
-            if (curVotes >= lineLength &&
+            if (curVotes >= threshold &&
                 curVotes > accum(n, r) &&
                 curVotes > accum(n, r + 1) &&
                 curVotes > accum(n, r + 2) &&
@@ -212,7 +212,7 @@ namespace cv { namespace cuda { namespace device
             }
         }
 
-        int houghLinesProbabilistic_gpu(GpuMat &mask, PtrStepSzi accum, int4* out, int maxSize, float rho, float theta, int lineGap, int lineLength, int* counterPtr, cudaStream_t stream)
+        int houghLinesProbabilistic_gpu(GpuMat &mask, PtrStepSzi accum, int4* out, int maxSize, float rho, float theta, int threshold, int lineGap, int lineLength, int* counterPtr, cudaStream_t stream)
         {
             cudaSafeCall( cudaMemsetAsync(counterPtr, 0, sizeof(int), stream) );
 
@@ -224,7 +224,7 @@ namespace cv { namespace cuda { namespace device
 
             houghLinesProbabilistic<<<grid, block, 0, stream>>>(tex, accum,
                                                      out, maxSize,
-                                                     rho, theta,
+                                                     rho, theta, threshold,
                                                      lineGap, lineLength,
                                                      mask.rows, mask.cols,
                                                      counterPtr);
