@@ -136,7 +136,7 @@ namespace
     };
 
     HoughSegmentDetectorImpl::HoughSegmentDetectorImpl(float rho, float theta, int threshold, int minLineLength, int maxLineGap, int maxLines) :
-        rho_(rho), theta_(theta), minLineLength_(minLineLength), maxLineGap_(maxLineGap), maxLines_(maxLines)
+        rho_(rho), theta_(theta), threshold_(threshold), minLineLength_(minLineLength), maxLineGap_(maxLineGap), maxLines_(maxLines)
     {
         cudaSafeCall(cudaMalloc(&counterPtr_, sizeof(int)));
     }

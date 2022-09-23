@@ -417,6 +417,9 @@ public:
     CV_WRAP virtual void setTheta(float theta) = 0;
     CV_WRAP virtual float getTheta() const = 0;
 
+    CV_WRAP virtual void setThreshold(int threshold) = 0;
+    CV_WRAP virtual int getThreshold() const = 0;
+
     CV_WRAP virtual void setMinLineLength(int minLineLength) = 0;
     CV_WRAP virtual int getMinLineLength() const = 0;
 
